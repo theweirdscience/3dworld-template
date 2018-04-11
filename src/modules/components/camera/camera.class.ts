@@ -8,9 +8,9 @@ export class Camera {
 
     constructor(width, height) {
 
-        this.camera = new THREE.PerspectiveCamera(25, width / height, .1, 10000);
+        this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 4000);
 
-        this.cameraControl = new THREE.OrbitControls(this.camera);
+//        this.cameraControl = new THREE.OrbitControls(this.camera);
 
         this.setNormalView();
         this.camera.name = 'main-camera';
@@ -22,21 +22,23 @@ export class Camera {
     }
 
     public setNormalView(): void {
-        this.camera.position.x = 4;
-        this.camera.position.y = 28;
-        this.camera.position.z = 70;
-        this.zoom = { level: 5, end: 1 };
+        /*this.camera.position.x = 1800;
+        this.camera.position.y = 500;
+        this.camera.position.z = 1800;*/
+        this.camera.position.set(1800, 500, 1800);
+        this.camera.lookAt(new THREE.Vector3(0,0,0))
+        //this.zoom = { level: 5, end: 1 };
 
-        this.cameraControl.target = new THREE.Vector3(0, 0, 0);
-
-        this.cameraControl.autoRotateSpeed = .2;
-        this.cameraControl.noRotate = false;
+        //this.cameraControl.target = new THREE.Vector3(0, 0, 0);
+        //
+        // this.cameraControl.autoRotateSpeed = .2;
+        // this.cameraControl.enableRotate = false;
     }
 
     public setDetailView({ x, y, z }): void {
         this.cameraControl.target = new THREE.Vector3(x, y, z);
         this.zoom = { level: 1, end: 10 };
-        this.cameraControl.noRotate = true;
+        this.cameraControl.enableRotate = true;
     }
 
     private set zoom({ level, end }) {

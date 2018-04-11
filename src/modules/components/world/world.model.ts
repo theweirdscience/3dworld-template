@@ -9,4 +9,5 @@ export interface WorldOptions {
     height: number;
     mode: Object;
     benchmark: boolean;
+    radius? : number;
 }

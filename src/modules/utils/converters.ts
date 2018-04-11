@@ -2,7 +2,7 @@ import Vector3 = THREE.Vector3;
 
 export function convertLatLonToVec3(lat, lon) {
     lat = lat * Math.PI / 180.0;
-    lon = -lon * Math.PI / 180.0;
+    lon = 180-lon * Math.PI / 180.0;
     return new THREE.Vector3(
         Math.cos(lat) * Math.cos(lon),
         Math.sin(lat),

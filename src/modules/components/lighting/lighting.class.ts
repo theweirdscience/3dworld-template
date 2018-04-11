@@ -11,9 +11,9 @@ export class Lighting {
     }
 
     public directionalLight(): THREE.DirectionalLight {
-        this.directionLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        this.directionLight.name = 'ambient';
-
+        this.directionLight = new THREE.DirectionalLight(0x3333ee, 3.5);
+        this.directionLight.name = 'directional';
+        this.directionLight.position.set(1800,500,1800);
         return this.directionLight;
     }
 

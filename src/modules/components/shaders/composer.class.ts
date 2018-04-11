@@ -10,8 +10,10 @@ export class Composer {
     }
 
     private prepareRenderer(): void {
+//        this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.shadowMapEnabled = true;
+        this.renderer.setClearColor(0x111111);
+        //this.renderer.shadowMap.enabled = true;
     }
 
 }

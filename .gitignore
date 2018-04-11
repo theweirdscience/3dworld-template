@@ -4,3 +4,4 @@ bundle.js
 *.js.map
 src/**/*.js
 *.iml
+.DS_Store

@@ -6,6 +6,7 @@ export const worldOptions: WorldOptions = {
     globalLighting: 0x222222,
     circumference: 15,
     pollingInterval: 30000,
+    radius: (window.innerHeight/1.5),
     name: 'earth',
     width: window.innerWidth,
     height: window.innerHeight,
