@@ -22,6 +22,7 @@ export class World {
     private mouse: Vector2;
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
+    private backgroundScene: any;
 
     constructor(public properties: WorldOptions) {
         this.composer = new Composer();
@@ -33,25 +34,12 @@ export class World {
         this.mouse = new THREE.Vector2();
         this.ui = new UI(this);
         this.globeGenerate();
-        this.loadBackground();
-    }
-
-    private loadBackground() {
-        var loader = new THREE.ImageLoader();
-
-        const bgTexture = loader.load("../../../../static/globe/gal.jpg",
-            (texture) => {
-                this.properties.container.querySelector('canvas').drawImage(texture, 100, 100);
-            });
-
-        this.scene.background = bgTexture;
-
     }
 
     public init(): void {
+
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
-        this.scene.add(this.lighting.directionalLight());
 
         this.properties.container.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
         this.properties.container.addEventListener('mouseup', this.onDocumentClicked.bind(this));
@@ -59,6 +47,7 @@ export class World {
         this.properties.container.appendChild(this.composer.renderer.domElement);
 
         this.render();
+
     }
 
     private onDocumentClicked(event) {
@@ -91,10 +80,12 @@ export class World {
         loader.load('../../../../static/globe/Earth.dae', collada => {
 
             collada.scene.traverse(function (node: any) {
+
                 if (node.isMesh) {
                     node.material = earthDiffTexture;
                     Object.assign(node.scale, { x: 15, y: 15, z: 15 });
                 }
+
             });
 
             this.locations = new LocationService(this.scene, this.properties.circumference);
@@ -148,6 +139,10 @@ export class World {
         this.composer.renderer.render(this.scene, this.camera.camera);
 
         this.checkIntersections();
+
+        if (this.backgroundScene) {
+            this.composer.renderer.render(this.backgroundScene, this.camera.camera);
+        }
 
         requestAnimationFrame(this.render.bind(this));
     }
