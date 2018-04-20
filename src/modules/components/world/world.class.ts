@@ -4,9 +4,9 @@ import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { UI } from '../ui/ui.class';
 import { Cloud } from '../cloud/clouds';
-import { LocationService } from '../location/location.class';
 import { TweenLite } from 'gsap';
 import { Vector2, MeshPhongMaterial } from 'three';
+import { Real } from '../theme/real.class';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -15,7 +15,6 @@ export class World {
     public composer: Composer;
     public sphere: THREE.Mesh;
 
-    private locations: LocationService;
     private ui: UI;
     private lighting: Lighting;
     private cloud: Cloud;
@@ -33,7 +32,8 @@ export class World {
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.ui = new UI(this);
-        this.globeGenerate();
+        this.globeGenerateTheme();
+
     }
 
     public init(): void {
@@ -63,42 +63,17 @@ export class World {
         this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
 
-    private globeGenerate() {
+    private globeGenerateTheme(): void {
 
-        const earthDiffTexture = new THREE.MeshPhongMaterial({
-            emissive: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_EMISSION.jpg'),
-            shininess: 5,
-            reflectivity: 0.2,
-            envMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_REFLECTION.jpg'),
-            bumpMap: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_BUMP.jpg'),
-            map: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_DIFFUSE.jpg'),
-            bumpScale: 0.3,
-        } as any);
+        switch(this.properties.theme) {
 
-        const loader: THREE.ColladaLoader = new THREE.ColladaLoader();
+            case '3d': 
+                new Real(this.scene, this.properties);
 
-        loader.load('../../../../static/globe/Earth.dae', collada => {
-
-            collada.scene.traverse(function (node: any) {
-
-                if (node.isMesh) {
-                    node.material = earthDiffTexture;
-                    Object.assign(node.scale, { x: 15, y: 15, z: 15 });
-                }
-
-            });
-
-            this.locations = new LocationService(this.scene, this.properties.circumference);
-
-            this.scene.add(collada.scene);
-
-            this.locations.visualize();
-
-        });
+        }     
 
     }
 
-    // extract to UI class
     private zoomIn(coordinates) {
         this.camera.setDetailView(coordinates);
         this.ui.showUI = true;
