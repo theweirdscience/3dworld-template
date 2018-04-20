@@ -17,7 +17,6 @@ export class World {
 
     private locations: LocationService;
     private ui: UI;
-    private intersected: any;
     private lighting: Lighting;
     private cloud: Cloud;
     private mouse: Vector2;
@@ -30,7 +29,6 @@ export class World {
         this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
         this.camera = new Camera(this.properties.width, this.properties.height);
-        this.intersected = false;
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.ui = new UI(this);
@@ -120,23 +118,15 @@ export class World {
 
             const object = intersects[0].object;
 
-            if (this.intersected != object && object.name === 'location' && !this.ui.isShowing) {
-                console.log('zooming in')
+            if (object.name === 'location' && !this.ui.isShowing) {
 
                 this.zoomIn(object.position);
 
                 this.ui.showDetailedUI(object[0]);
             }
 
-        } else {
-
-            if (this.intersected) {
-
-                this.zoomOut();
-
-            }
-
         }
+
     }
 
     private render(): void {
