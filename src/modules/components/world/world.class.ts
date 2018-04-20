@@ -3,10 +3,10 @@ import { Lighting } from '../lighting/lighting.class';
 import { Composer } from '../shaders/composer.class';
 import { Camera } from '../camera/camera.class';
 import { UI } from '../ui/ui.class';
-import { Cloud } from '../cloud/clouds';
 import { TweenLite } from 'gsap';
 import { Vector2, MeshPhongMaterial } from 'three';
 import { Real } from '../theme/real.class';
+import { Flat } from '../theme/flat.class';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -17,7 +17,6 @@ export class World {
 
     private ui: UI;
     private lighting: Lighting;
-    private cloud: Cloud;
     private mouse: Vector2;
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
@@ -68,12 +67,11 @@ export class World {
 
             case '3d':
                 new Real(this.scene, this.properties);
+                break;
             
-            case 'normal':
-                new Real(this.scene, this.properties);
-
-            case 'particles':
-                new Real(this.scene, this.properties);
+            case 'flat':
+                new Flat(this.scene);
+                break;
 
         }
 

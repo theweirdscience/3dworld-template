@@ -3,6 +3,7 @@ import { LocationService } from "../location/location.class";
 export class Real {
 
     constructor(private scene, private properties) {
+
         const earthDiffTexture = new THREE.MeshPhongMaterial({
             emissive: new THREE.TextureLoader().load('../../../../static/globe/PlanetEarth_EMISSION.jpg'),
             shininess: 5,

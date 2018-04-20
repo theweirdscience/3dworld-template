@@ -20,7 +20,6 @@ export class UI {
         
         this.camera.setDetailView(content.position);
 
-
         this.showUI ? this.renderUI() : this.removeUI();
 
     }
