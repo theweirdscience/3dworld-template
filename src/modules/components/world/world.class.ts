@@ -31,7 +31,7 @@ export class World {
         this.camera = new Camera(this.properties.width, this.properties.height);
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
-        this.ui = new UI(this);
+        this.ui = new UI(this.properties);
         this.globeGenerateTheme();
 
     }

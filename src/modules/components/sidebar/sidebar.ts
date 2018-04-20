@@ -2,16 +2,12 @@ import { World } from "../world/world.class";
 import { WorldOptions } from "../world/world.model";
 
 export class SideBar {
-    
+
     public sidebarComponent: HTMLDivElement;
 
     private props: WorldOptions;
 
-    constructor(private world: World, content) {
-        this.createSideBar(content);
-    }
-
-    createSideBar(content) {
+    constructor(private properties: WorldOptions, content) {
         this.sidebarComponent = document.createElement('div');
         const header = document.createElement('h4');
         const close = document.createElement('span');
@@ -25,10 +21,12 @@ export class SideBar {
         const agentList = document.createElement('ul');
 
         content.agents.forEach(agent => {
+
             const listItem = document.createElement('li');
             listItem.innerHTML = `<img src="${agent.picture}"> ${agent.name}`;
             listItem.classList.add('agent');
             agentList.appendChild(listItem);
+
         });
 
         this.sidebarComponent.appendChild(agentList);
@@ -36,14 +34,13 @@ export class SideBar {
 
         this.sidebarComponent.classList.add('detailed-view');
 
-        this.world.properties.container.appendChild(this.sidebarComponent);
+        this.properties.container.appendChild(this.sidebarComponent);
     }
 
-    removeBar() {
+    private removeBar() {
         this.sidebarComponent.blur();
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
-        setTimeout(() => document.querySelector('main.world').removeChild(this.sidebarComponent), 200);
-        this.world.zoomOut();
+        setTimeout(() => this.properties.container.removeChild(this.sidebarComponent), 200);
     }
 
 }
