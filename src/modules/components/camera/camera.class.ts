@@ -50,9 +50,11 @@ export class Camera {
     }
 
     public setDetailView({ x, y, z }): void {
+
         this.cameraControl.target = new THREE.Vector3(x, y, z);
         this.zoom = { level: 1, end: 10 };
         this.cameraControl.noRotate = true;
+
     }
 
     private set zoom({ level, end }) {

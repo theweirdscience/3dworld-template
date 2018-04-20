@@ -1,5 +1,7 @@
 import { World } from "../world/world.class";
 import { WorldOptions } from "../world/world.model";
+import { UI } from "../ui/ui.class";
+import { Camera } from "../camera/camera.class";
 
 export class SideBar {
 
@@ -7,7 +9,8 @@ export class SideBar {
 
     private props: WorldOptions;
 
-    constructor(private properties: WorldOptions, content) {
+    constructor(private properties: WorldOptions, private content, private camera: Camera) {
+
         this.sidebarComponent = document.createElement('div');
         const header = document.createElement('h4');
         const close = document.createElement('span');
@@ -35,12 +38,14 @@ export class SideBar {
         this.sidebarComponent.classList.add('detailed-view');
 
         this.properties.container.appendChild(this.sidebarComponent);
+
     }
 
     private removeBar() {
         this.sidebarComponent.blur();
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
         setTimeout(() => this.properties.container.removeChild(this.sidebarComponent), 200);
+        this.camera.setNormalView();
     }
 
 }

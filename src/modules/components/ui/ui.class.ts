@@ -1,6 +1,7 @@
 import { SideBar } from "../sidebar/sidebar";
 import { World } from "../world/world.class";
 import { WorldOptions } from "../world/world.model";
+import { Camera } from "../camera/camera.class";
 
 export class UI {
 
@@ -8,20 +9,19 @@ export class UI {
 
     private detail: HTMLDivElement;
     private sideBar: SideBar;
+    private showUI: boolean;
 
-    constructor(private properties: WorldOptions) {
+    constructor(private properties: WorldOptions, private camera: Camera) {
     }
 
     public showDetailedUI(content): void {
 
-        this.sideBar = new SideBar(this.properties, content);
-        this.isShowing ? this.renderUI() : this.removeUI();
+        this.sideBar = new SideBar(this.properties, content[0], this.camera);
+        
+        this.camera.setDetailView(content.position);
 
-    }
 
-    public set showUI(show) {
-
-        this.isShowing = show;
+        this.showUI ? this.renderUI() : this.removeUI();
 
     }
 

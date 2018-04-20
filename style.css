@@ -30,10 +30,6 @@ canvas:active {
     cursor: -webkit-grabbing !important;
 }
 
-.detailed-view.is-open {
-    background: #262b33;
-}
-
 h3 {
     padding: 0;
     font-size: 18px;
@@ -45,6 +41,7 @@ h3 {
     position: absolute;
     z-index: 10;
     color: white;
+    background: #262b33;
     left: 0;
     padding: 1rem 3rem;
     margin: 0;

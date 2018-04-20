@@ -31,9 +31,8 @@ export class World {
         this.camera = new Camera(this.properties.width, this.properties.height);
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
-        this.ui = new UI(this.properties);
+        this.ui = new UI(this.properties, this.camera);
         this.globeGenerateTheme();
-
     }
 
     public init(): void {
@@ -65,23 +64,19 @@ export class World {
 
     private globeGenerateTheme(): void {
 
-        switch(this.properties.theme) {
+        switch (this.properties.theme) {
 
-            case '3d': 
+            case '3d':
+                new Real(this.scene, this.properties);
+            
+            case 'normal':
                 new Real(this.scene, this.properties);
 
-        }     
+            case 'particles':
+                new Real(this.scene, this.properties);
 
-    }
+        }
 
-    private zoomIn(coordinates) {
-        this.camera.setDetailView(coordinates);
-        this.ui.showUI = true;
-    }
-
-    public zoomOut() {
-        this.camera.setNormalView();
-        this.ui.showUI = false;
     }
 
     private checkIntersections() {
@@ -96,9 +91,8 @@ export class World {
 
             if (object.name === 'location' && !this.ui.isShowing) {
 
-                this.zoomIn(object.position);
+                this.ui.showDetailedUI(object)
 
-                this.ui.showDetailedUI(object[0]);
             }
 
         }
@@ -114,10 +108,6 @@ export class World {
         this.composer.renderer.render(this.scene, this.camera.camera);
 
         this.checkIntersections();
-
-        if (this.backgroundScene) {
-            this.composer.renderer.render(this.backgroundScene, this.camera.camera);
-        }
 
         requestAnimationFrame(this.render.bind(this));
     }
