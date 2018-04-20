@@ -4,7 +4,7 @@ import { TrackballControls } from 'three';
 export class Camera {
 
     public camera: THREE.PerspectiveCamera;
-    public cameraControl: THREE.OrbitControls;
+    public cameraControl: THREE.OrbitControls | any;
     public timeline: TweenLite;
 
     constructor(width, height) {
@@ -23,6 +23,8 @@ export class Camera {
         this.cameraControl.enableDamping = true;
         this.cameraControl.dampingFactor = .05;
 
+        this.cameraControl.enableZoom = false;
+
         this.cameraControl.minPolarAngle = restrictAxis;
         this.cameraControl.maxPolarAngle = restrictAxis;
 
@@ -35,6 +37,7 @@ export class Camera {
     }
 
     public setNormalView(): void {
+
         this.camera.position.x = 4;
         this.camera.position.y = 28;
         this.camera.position.z = 70;
@@ -43,6 +46,7 @@ export class Camera {
         this.cameraControl.target = new THREE.Vector3(0, 0, 0);
 
         this.cameraControl.noRotate = false;
+
     }
 
     public setDetailView({ x, y, z }): void {

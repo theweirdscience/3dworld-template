@@ -6,7 +6,7 @@ import { UI } from '../ui/ui.class';
 import { Cloud } from '../cloud/clouds';
 import { LocationService } from '../location/location.class';
 import { TweenLite } from 'gsap';
-import { Vector2 } from 'three';
+import { Vector2, MeshPhongMaterial } from 'three';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -33,6 +33,19 @@ export class World {
         this.mouse = new THREE.Vector2();
         this.ui = new UI(this);
         this.globeGenerate();
+        this.loadBackground();
+    }
+
+    private loadBackground() {
+        var loader = new THREE.ImageLoader();
+
+        const bgTexture = loader.load("../../../../static/globe/gal.jpg",
+            (texture) => {
+                this.properties.container.querySelector('canvas').drawImage(texture, 100, 100);
+            });
+
+        this.scene.background = bgTexture;
+
     }
 
     public init(): void {
@@ -84,11 +97,9 @@ export class World {
                 }
             });
 
-            const globe = collada.scene;
-
             this.locations = new LocationService(this.scene, this.properties.circumference);
 
-            this.scene.add(globe);
+            this.scene.add(collada.scene);
 
             this.locations.visualize();
 
@@ -105,7 +116,6 @@ export class World {
     public zoomOut() {
         this.camera.setNormalView();
         this.ui.showUI = false;
-        this.intersected = null;
     }
 
     private checkIntersections() {
