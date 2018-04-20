@@ -14,9 +14,9 @@ export class World {
     public camera: Camera;
     public scene: THREE.Scene;
     public composer: Composer;
-    public sphere: THREE.Mesh;
 
     private ui: UI;
+    private globe: Real | Flat;
     private lighting: Lighting;
     private mouse: Vector2;
     private projector: THREE.Projector;
@@ -32,12 +32,24 @@ export class World {
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.ui = new UI(this.properties, this.camera);
+        
         this.globeGenerateTheme();
+
+        this.ui.realGlobe$
+            .subscribe((x) => {
+                this.scene.remove(this.globe.sphere);
+                this.globeGenerateTheme(x);
+            });
+
+        this.ui.flatGlobe$
+            .subscribe((x) => {
+                this.scene.remove(this.globe.sphere);
+                this.globeGenerateTheme(x);
+            });
     }
 
     public init(): void {
 
-        this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
         this.scene.add(this.lighting.directionalLight());
 
@@ -63,16 +75,16 @@ export class World {
         this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
 
-    private globeGenerateTheme(): void {
+    private globeGenerateTheme(theme = this.properties.theme): void {
 
-        switch (this.properties.theme) {
+        switch (theme) {
 
-            case '3d':
-                new Real(this.scene, this.properties);
+            case 'real':
+                this.globe = new Real(this.scene, this.properties);
                 break;
 
             case 'flat':
-                new Flat(this.scene);
+                this.globe = new Flat(this.scene);
                 break;
 
         }

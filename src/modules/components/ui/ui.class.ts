@@ -2,10 +2,17 @@ import { SideBar } from "../sidebar/sidebar";
 import { World } from "../world/world.class";
 import { WorldOptions } from "../world/world.model";
 import { Camera } from "../camera/camera.class";
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Subject } from "rxjs";
+import { FromEventObservable } from "rxjs/observable/FromEventObservable";
 
 export class UI {
 
     public isShowing: boolean;
+
+    // refactor
+    public realGlobe$: any;
+    public flatGlobe$: any;
 
     private detail: HTMLDivElement;
     private sideBar: SideBar;
@@ -40,6 +47,12 @@ export class UI {
         worldPicker.appendChild(buttonContainer);
 
         this.properties.container.appendChild(worldPicker);
+
+        this.realGlobe$ = fromEvent(real, 'click')
+            .map((x: any) => x.target.innerText);
+
+        this.flatGlobe$ = fromEvent(flat, 'click')
+            .map((x: any) => x.target.innerText);
 
     }
 

@@ -2,6 +2,8 @@ import { LocationService } from "../location/location.class";
 
 export class Real {
 
+    public sphere: any;
+
     constructor(private scene, private properties) {
 
         const earthDiffTexture = new THREE.MeshPhongMaterial({
@@ -14,7 +16,7 @@ export class Real {
             bumpScale: 0.3,
         } as any);
 
-        const loader: THREE.ColladaLoader = new THREE.ColladaLoader();
+        const loader = new THREE.ColladaLoader();
 
         loader.load('../../../../static/globe/Earth.dae', collada => {
 
@@ -29,11 +31,20 @@ export class Real {
 
             const locations = new LocationService(scene, this.properties.circumference);
 
-            scene.add(collada.scene);
+            this.sphere = collada.scene;
+
+            scene.add(this.sphere);
 
             locations.visualize();
 
         });
+
+    }
+
+    public removeGlobe() {
+
+        this.scene.remove();
+
     }
 
 }

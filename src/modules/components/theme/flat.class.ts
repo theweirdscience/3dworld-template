@@ -4,22 +4,24 @@ import AnimationLoop from "../engine/engine.class";
 
 export class Flat {
 
+    public sphere: THREE.Mesh;
+
     private globe: THREE.SphereGeometry;
     private clouds: THREE.Mesh;
 
     constructor(scene: Scene) {
 
-        const sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
-        sphere.name = 'flat-world';
+        this.sphere = new THREE.Mesh(this.globeGenerate(), this.decoratePlanet());
+        this.sphere.name = 'flat-world';
 
-        sphere.rotation.y = 17.25;
+        this.sphere.rotation.y = 17.25;
 
         const locations = new LocationService(scene, 15);
 
         locations.visualize();
 
-        sphere.add(this.cloudTexture());
-        scene.add(sphere);
+        this.sphere.add(this.cloudTexture());
+        scene.add(this.sphere);
 
         AnimationLoop
             .animationEngine$
@@ -31,9 +33,11 @@ export class Flat {
     }
 
     private globeGenerate(): THREE.SphereGeometry {
+
         this.globe = new THREE.SphereGeometry(15, 32, 32);
 
         return this.globe;
+
     }
 
     private decoratePlanet(): THREE.MeshPhongMaterial {
