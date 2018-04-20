@@ -7,6 +7,7 @@ import { TweenLite } from 'gsap';
 import { Vector2, MeshPhongMaterial } from 'three';
 import { Real } from '../theme/real.class';
 import { Flat } from '../theme/flat.class';
+import AnimationLoop from '../engine/engine.class';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -38,13 +39,14 @@ export class World {
 
         this.scene.add(this.sphere);
         this.scene.add(this.lighting.ambientLight());
+        this.scene.add(this.lighting.directionalLight());
 
         this.properties.container.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
         this.properties.container.addEventListener('mouseup', this.onDocumentClicked.bind(this));
 
         this.properties.container.appendChild(this.composer.renderer.domElement);
 
-        this.render();
+        AnimationLoop.animationEngine$.subscribe(this.render.bind(this));
 
     }
 
@@ -68,7 +70,7 @@ export class World {
             case '3d':
                 new Real(this.scene, this.properties);
                 break;
-            
+
             case 'flat':
                 new Flat(this.scene);
                 break;
@@ -97,7 +99,7 @@ export class World {
 
     }
 
-    private render(): void {
+    public render() {
         this.camera.camera.updateProjectionMatrix();
         this.camera.cameraControl.update();
 
@@ -107,7 +109,6 @@ export class World {
 
         this.checkIntersections();
 
-        requestAnimationFrame(this.render.bind(this));
     }
 
 }

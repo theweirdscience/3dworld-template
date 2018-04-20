@@ -59,3 +59,16 @@ h3 {
 .agent {
     padding: 1rem 0;
 }
+
+.toggle {
+    position: fixed;
+    background: white;
+    right: 0;
+    top: 0;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.toggle li {
+    padding: 10px;
+}

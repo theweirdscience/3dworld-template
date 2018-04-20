@@ -24,10 +24,11 @@
     "gsap": "^1.20.4",
     "http-server": "^0.10.0",
     "moment": "^2.21.0",
-    "rxjs": "^5.3.0",
+    "rxjs": "^5.5.10",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
+    "@reactivex/rxjs": "^5.5.10",
     "@types/jasmine": "^2.8.6",
     "@types/node": "^7.0.55",
     "@types/three": "^0.83.5",
