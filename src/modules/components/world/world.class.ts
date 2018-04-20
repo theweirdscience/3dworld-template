@@ -14,7 +14,6 @@ export class World {
     public scene: THREE.Scene;
     public composer: Composer;
     public sphere: THREE.Mesh;
-    public properties: WorldOptions;
 
     private locations: LocationService;
     private ui: UI;
@@ -22,22 +21,15 @@ export class World {
     private lighting: Lighting;
     private cloud: Cloud;
     private mouse: Vector2;
-    private globe: any;
     private projector: THREE.Projector;
     private hasClicked: boolean = false;
 
-    // extract to control class
-    private velocityX: number = 0;
-    private velocityY: number = 0;
-    private friction: number = 0.07;
-
-    constructor(options: WorldOptions) {
-        this.properties = options;
+    constructor(public properties: WorldOptions) {
         this.composer = new Composer();
         this.lighting = new Lighting();
         this.raycaster = new THREE.Raycaster();
         this.scene = new THREE.Scene();
-        this.camera = new Camera(options.width, options.height);
+        this.camera = new Camera(this.properties.width, this.properties.height);
         this.intersected = false;
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
@@ -94,11 +86,11 @@ export class World {
                 }
             });
 
-            this.globe = collada.scene;
+            const globe = collada.scene;
 
             this.locations = new LocationService(this.scene, this.properties.circumference);
 
-            this.scene.add(this.globe);
+            this.scene.add(globe);
 
             this.locations.visualize();
 
