@@ -10,7 +10,6 @@ export class UI {
 
     public isShowing: boolean = false;
 
-    // refactor
     public realGlobe$: any;
     public flatGlobe$: any;
 
@@ -69,7 +68,13 @@ export class UI {
 
     public showDetailedUI(content): void {
 
-        this.sideBar = new SideBar(this.properties, content[0], this.camera);
+        this.sideBar = new SideBar(this.properties, content[0]);
+
+        this.sideBar.close$
+            .subscribe(() => {
+                this.removeDetailedUI();
+            });
+
         this.camera.setDetailView(content.position);
 
         this.detail = this.properties.container.querySelector('.detailed-view');
@@ -82,9 +87,8 @@ export class UI {
 
     public removeDetailedUI(): void {
 
-        this.detail.classList.remove('fadeInLeft', 'is-open');
-        this.detail.classList.add('fadeOutLeft');
-
+        this.sideBar.close();
+        this.camera.setNormalView();
         this.isShowing = false;
 
     }

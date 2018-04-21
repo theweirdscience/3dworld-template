@@ -11,7 +11,9 @@ export class SideBar {
 
     private props: WorldOptions;
 
-    constructor(private properties: WorldOptions, private content, private camera: Camera) {
+    constructor(
+        private properties: WorldOptions,
+        private content) {
 
         this.sidebarComponent = document.createElement('div');
         const header = document.createElement('h4');
@@ -22,8 +24,6 @@ export class SideBar {
         this.sidebarComponent.appendChild(header);
 
         this.close$ = fromEvent(close, 'click');
-
-        close.addEventListener('click', this.removeBar.bind(this));
 
         const agentList = document.createElement('ul');
 
@@ -45,12 +45,11 @@ export class SideBar {
 
     }
 
-    private removeBar() {
+    public close() {
 
         this.sidebarComponent.blur();
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
-        setTimeout(this.properties.container.removeChild(this.sidebarComponent), 200);
-        this.camera.setNormalView();
+        setTimeout(() => this.properties.container.removeChild(this.sidebarComponent), 200);
 
     }
 
