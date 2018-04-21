@@ -9,7 +9,6 @@ import { Real } from '../theme/real.class';
 import { Flat } from '../theme/flat.class';
 import AnimationLoop from '../engine/engine.class';
 import { Theme } from '../theme/theme.model';
-import { Galaxy } from '../theme/galaxy.class';
 import { Particle } from '../theme/particle.class';
 
 export class World {
@@ -37,12 +36,6 @@ export class World {
         this.ui = new UI(this.properties, this.camera);
 
         this.globeGenerateTheme();
-
-        if (this.properties.stars) {
-
-            new Galaxy(this.scene);
-
-        }
 
         this.ui.realGlobe$
             .subscribe((x) => {

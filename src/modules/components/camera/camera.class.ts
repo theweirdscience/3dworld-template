@@ -1,4 +1,4 @@
-import { TweenLite, Circ } from 'gsap';
+import { TweenLite, Circ, Cubic } from 'gsap';
 import { TrackballControls } from 'three';
 
 export class Camera {
@@ -58,15 +58,17 @@ export class Camera {
     }
 
     private set zoom({ level, end }) {
+
         const zoom = { level }
 
-        this.timeline = TweenLite.to(zoom, 1, { level: end, onUpdate: updateZoom.bind(this), ease: Circ.easeOut, })
+        this.timeline = TweenLite.to(zoom, 3.5, { level: end, onUpdate: updateZoom.bind(this), ease: Cubic.easeInOut })
 
         function updateZoom() {
 
             this.camera.zoom = zoom.level;
 
         }
+        
     }
 
 }

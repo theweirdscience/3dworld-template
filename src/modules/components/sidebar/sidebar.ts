@@ -49,7 +49,7 @@ export class SideBar {
 
         this.sidebarComponent.blur();
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
-        setTimeout(() => this.properties.container.removeChild(this.sidebarComponent), 200);
+        setTimeout(() => this.properties.container.removeChild(this.sidebarComponent), 500);
 
     }
 
