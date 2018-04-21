@@ -2,10 +2,12 @@ import { World } from "../world/world.class";
 import { WorldOptions } from "../world/world.model";
 import { UI } from "../ui/ui.class";
 import { Camera } from "../camera/camera.class";
+import { fromEvent } from "rxjs/observable/fromEvent";
 
 export class SideBar {
 
     public sidebarComponent: HTMLDivElement;
+    public close$: any;
 
     private props: WorldOptions;
 
@@ -18,6 +20,8 @@ export class SideBar {
         close.classList.add('close');
         header.textContent = content.name;
         this.sidebarComponent.appendChild(header);
+
+        this.close$ = fromEvent(close, 'click');
 
         close.addEventListener('click', this.removeBar.bind(this));
 
@@ -42,10 +46,12 @@ export class SideBar {
     }
 
     private removeBar() {
+
         this.sidebarComponent.blur();
         this.sidebarComponent.classList.add('animated', 'fadeOutLeft');
-        setTimeout(() => this.properties.container.removeChild(this.sidebarComponent), 200);
+        setTimeout(this.properties.container.removeChild(this.sidebarComponent), 200);
         this.camera.setNormalView();
+
     }
 
 }

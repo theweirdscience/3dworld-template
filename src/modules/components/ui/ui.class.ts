@@ -8,7 +8,7 @@ import { FromEventObservable } from "rxjs/observable/FromEventObservable";
 
 export class UI {
 
-    public isShowing: boolean;
+    public isShowing: boolean = false;
 
     // refactor
     public realGlobe$: any;
@@ -16,7 +16,6 @@ export class UI {
 
     private detail: HTMLDivElement;
     private sideBar: SideBar;
-    private showUI: boolean;
     private worldPicker: HTMLElement;
 
     constructor(
@@ -31,55 +30,63 @@ export class UI {
 
         const worldPicker = document.createElement('div');
         worldPicker.classList.add('toggle');
-        const buttonContainer = document.createElement('ul');
 
-        const flat = document.createElement('li');
+        const flat = document.createElement('input');
+        const flatLabel = document.createElement('label');
+        flatLabel.textContent = 'flat';
+        flatLabel.htmlFor = 'flat'
+        flat.type = 'radio';
+        flat.value = 'flat';
+        flat.name = 'world';
+        flat.id = 'flat';
         flat.textContent = 'flat';
-        flat.classList.add('paper-toggle')
 
-        const real = document.createElement('li');
+        const real = document.createElement('input');
+        const realLabel = document.createElement('label');
+        realLabel.textContent = 'real';
+        realLabel.htmlFor = 'real'
+        real.type = 'radio';
+        real.value = 'real';
+        real.name = 'world';
+        real.id = 'real';
         real.textContent = 'real';
-        real.classList.add('paper-toggle');
 
-        buttonContainer.appendChild(flat);
-        buttonContainer.appendChild(real);
+        worldPicker.appendChild(flat);
+        worldPicker.appendChild(flatLabel);
 
-        worldPicker.appendChild(buttonContainer);
+        worldPicker.appendChild(real);
+        worldPicker.appendChild(realLabel);
 
         this.properties.container.appendChild(worldPicker);
 
         this.realGlobe$ = fromEvent(real, 'click')
-            .map((x: any) => x.target.innerText);
+            .map((x: any) => x.target.value);
 
         this.flatGlobe$ = fromEvent(flat, 'click')
-            .map((x: any) => x.target.innerText);
+            .map((x: any) => x.target.value);
 
     }
 
     public showDetailedUI(content): void {
 
         this.sideBar = new SideBar(this.properties, content[0], this.camera);
-
         this.camera.setDetailView(content.position);
-
-        this.showUI ? this.renderUI() : this.removeUI();
-
-    }
-
-    private renderUI(): void {
 
         this.detail = this.properties.container.querySelector('.detailed-view');
         this.detail.classList.remove('fadeOutLeft');
         this.detail.classList.add('fadeInLeft', 'animated', 'is-open');
 
-    }
-
-    private removeUI(): void {
-
-        if (this.detail) {
-            this.detail.classList.remove('fadeInLeft', 'is-open');
-            this.detail.classList.add('fadeOutLeft');
-        }
+        this.isShowing = true;
 
     }
+
+    public removeDetailedUI(): void {
+
+        this.detail.classList.remove('fadeInLeft', 'is-open');
+        this.detail.classList.add('fadeOutLeft');
+
+        this.isShowing = false;
+
+    }
+
 }

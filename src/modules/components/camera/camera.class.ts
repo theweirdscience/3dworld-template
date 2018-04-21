@@ -63,7 +63,9 @@ export class Camera {
         this.timeline = TweenLite.to(zoom, 1, { level: end, onUpdate: updateZoom.bind(this), ease: Circ.easeOut, })
 
         function updateZoom() {
+
             this.camera.zoom = zoom.level;
+
         }
     }
 

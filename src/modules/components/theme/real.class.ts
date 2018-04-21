@@ -29,13 +29,11 @@ export class Real {
 
             });
 
-            const locations = new LocationService(scene, this.properties.circumference);
-
             this.sphere = collada.scene;
 
             scene.add(this.sphere);
 
-            locations.visualize();
+            new LocationService(scene, this.properties.circumference).visualize();
 
         });
 

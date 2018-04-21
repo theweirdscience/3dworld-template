@@ -32,7 +32,7 @@ export class World {
         this.projector = new THREE.Projector();
         this.mouse = new THREE.Vector2();
         this.ui = new UI(this.properties, this.camera);
-        
+
         this.globeGenerateTheme();
 
         this.ui.realGlobe$
@@ -87,11 +87,15 @@ export class World {
                 this.globe = new Flat(this.scene);
                 break;
 
+            case 'particle':
+                this.globe = new Flat(this.scene);
+                break;
+
         }
 
     }
 
-    private checkIntersections() {
+    private checkIntersections(): void {
 
         this.raycaster.setFromCamera(this.mouse, this.camera.camera);
 
@@ -103,7 +107,7 @@ export class World {
 
             if (object.name === 'location' && !this.ui.isShowing) {
 
-                this.ui.showDetailedUI(object)
+                this.ui.showDetailedUI(object);
 
             }
 
@@ -111,7 +115,8 @@ export class World {
 
     }
 
-    public render() {
+    public render(): void {
+
         this.camera.camera.updateProjectionMatrix();
         this.camera.cameraControl.update();
 
