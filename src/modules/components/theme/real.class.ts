@@ -1,8 +1,10 @@
 import { LocationService } from "../location/location.class";
+import { Scene } from "three";
+import { Theme } from "./theme.model";
 
-export class Real {
+export class Real implements Theme {
 
-    public sphere: any;
+    public sphere: Scene;
 
     constructor(private scene, private properties) {
 
@@ -36,12 +38,6 @@ export class Real {
             new LocationService(scene, this.properties.circumference).visualize();
 
         });
-
-    }
-
-    public removeGlobe() {
-
-        this.scene.remove();
 
     }
 

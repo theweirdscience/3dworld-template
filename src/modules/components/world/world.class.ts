@@ -8,6 +8,9 @@ import { Vector2, MeshPhongMaterial } from 'three';
 import { Real } from '../theme/real.class';
 import { Flat } from '../theme/flat.class';
 import AnimationLoop from '../engine/engine.class';
+import { Theme } from '../theme/theme.model';
+import { Galaxy } from '../theme/galaxy.class';
+import { Particle } from '../theme/particle.class';
 
 export class World {
     public raycaster: THREE.Raycaster;
@@ -16,7 +19,7 @@ export class World {
     public composer: Composer;
 
     private ui: UI;
-    private globe: Real | Flat;
+    private globe: Theme;
     private lighting: Lighting;
     private mouse: Vector2;
     private projector: THREE.Projector;
@@ -34,6 +37,12 @@ export class World {
         this.ui = new UI(this.properties, this.camera);
 
         this.globeGenerateTheme();
+
+        if (this.properties.stars) {
+
+            new Galaxy(this.scene);
+
+        }
 
         this.ui.realGlobe$
             .subscribe((x) => {
@@ -88,7 +97,7 @@ export class World {
                 break;
 
             case 'particle':
-                this.globe = new Flat(this.scene);
+                this.globe = new Particle(this.scene);
                 break;
 
         }
