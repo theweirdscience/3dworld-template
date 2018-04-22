@@ -40,6 +40,7 @@ export class World {
         this.ui.realGlobe$
             .subscribe((x) => {
                 this.scene.remove(this.globe.sphere);
+                this.scene.background = null;
                 this.globeGenerateTheme(x);
             });
 

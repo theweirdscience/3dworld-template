@@ -12,8 +12,7 @@ export class Particle implements Theme {
     private count: number;
 
     constructor(private scene: Scene) {
-
-
+        
 
     }
 

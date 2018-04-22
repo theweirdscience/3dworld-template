@@ -1,5 +1,5 @@
 import { LocationService } from "../location/location.class";
-import { Scene } from "three";
+import { Scene, ImageLoader } from "three";
 import { Theme } from "./theme.model";
 
 export class Real implements Theme {
@@ -38,6 +38,18 @@ export class Real implements Theme {
             new LocationService(scene, this.properties.circumference).visualize();
 
         });
+
+        const textureLoader = new THREE.TextureLoader();
+
+        const bgTexture = textureLoader.load("../../../../static/globe/gal.png",
+
+            function(texture) {
+                var img = texture.image;
+                const bgWidth = img.width;
+                const bgHeight = img.height;
+            });
+
+        scene.background = bgTexture;
 
     }
 
